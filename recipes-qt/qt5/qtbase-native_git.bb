@@ -11,13 +11,11 @@ SRC_URI += "\
     file://0002-Add-external-hostbindir-option.patch \
     file://0003-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0004-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
-    file://0005-qt_module-Fix-pkgconfig-replacement.patch \
-    file://0006-configure-make-pulseaudio-alsa-freetype-a-configurab.patch \
 "
 
 # specific for native version
 SRC_URI += " \
-    file://0010-Always-build-uic.patch \
+    file://0008-Always-build-uic.patch \
 "
 
 do_install_append() {
@@ -26,4 +24,4 @@ do_install_append() {
     ln -sf syncqt.pl ${D}${OE_QMAKE_PATH_QT_BINS}/syncqt
 }
 
-SRCREV = "c6b555dac389f9a599a9ad342de56dea329fff60"
+SRCREV = "207598fd8e69be34e8ba2c9db7720cb6003ea114"

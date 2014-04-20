@@ -1,7 +1,7 @@
-From 27b15fb80dc1aad8d023daeeb45519747f1a16aa Mon Sep 17 00:00:00 2001
+From 4d5502114a3135f2c78eb9e63476918cbee00040 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.Jansa@gmail.com>
 Date: Sat, 16 Nov 2013 00:32:30 +0100
-Subject: [PATCH 10/10] Always build uic
+Subject: [PATCH 08/10] Always build uic
 
 Even if we are not building gui or widgets. This tool is needed later
 as a native tool when compiling the target.
@@ -14,7 +14,7 @@ Signed-off-by: Martin Jansa <Martin.Jansa@gmail.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/src.pro b/src/src.pro
-index 0d854a8..3d71178 100644
+index 6a805a6..90623a6 100644
 --- a/src/src.pro
 +++ b/src/src.pro
 @@ -158,7 +158,7 @@ contains(QT_CONFIG, concurrent):SUBDIRS += src_concurrent
