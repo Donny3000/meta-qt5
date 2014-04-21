@@ -11,6 +11,8 @@ SRC_URI += "\
     file://0002-Add-external-hostbindir-option.patch \
     file://0003-qlibraryinfo-allow-to-set-qt.conf-from-the-outside-u.patch \
     file://0004-configureapp-Prefix-default-LIBDIRS-and-INCDIRS-with.patch \
+    file://0001-Fix-missing-plugin_types.patch \
+    file://0001-Revert-eglfs-Print-the-chosen-config-in-debug-mode.patch \
 "
 
 # specific for native version
