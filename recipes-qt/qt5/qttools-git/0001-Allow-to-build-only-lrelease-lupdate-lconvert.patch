@@ -1,4 +1,4 @@
-From c1a47f8e7b7858265e8e6b008159e74e32cd7ae6 Mon Sep 17 00:00:00 2001
+From 90a2e92062fc67fa54be0f5596606ce2bc21f772 Mon Sep 17 00:00:00 2001
 From: Martin Jansa <Martin.jansa@gmail.com>
 Date: Wed, 11 Sep 2013 18:30:08 +0200
 Subject: [PATCH 1/2] Allow to build only lrelease + lupdate + lconvert
@@ -14,9 +14,9 @@ Signed-off-by: Martin Jansa <Martin.jansa@gmail.com>
  examples/examples.pro     |  4 ++--
  src/designer/src/src.pro  | 16 +++++++++-------
  src/linguist/linguist.pro |  2 +-
- src/src.pro               | 10 ++++++----
+ src/src.pro               | 14 ++++++++------
  tests/auto/auto.pro       | 24 +++++++++++++-----------
- 5 files changed, 31 insertions(+), 25 deletions(-)
+ 5 files changed, 33 insertions(+), 27 deletions(-)
 
 diff --git a/examples/examples.pro b/examples/examples.pro
 index 4955969..8e86419 100644
@@ -74,7 +74,7 @@ index 3a70580..a977878 100644
  qtNomakeTools( \
      linguist \
 diff --git a/src/src.pro b/src/src.pro
-index 861d06d..8b6288d 100644
+index 861d06d..3438f9a 100644
 --- a/src/src.pro
 +++ b/src/src.pro
 @@ -4,10 +4,12 @@ qtHaveModule(widgets) {
@@ -93,6 +93,15 @@ index 861d06d..8b6288d 100644
  #    unix:!mac:!embedded:!qpa:SUBDIRS += qtconfig
  
          linguist.depends = designer
+@@ -15,7 +17,7 @@ qtHaveModule(widgets) {
+ }
+ 
+ SUBDIRS += linguist
+-!android|android_app: SUBDIRS += qtpaths
++!linguistonly:!android|android_app: SUBDIRS += qtpaths
+ 
+ mac {
+     SUBDIRS += macdeployqt
 @@ -25,7 +27,7 @@ android {
      SUBDIRS += androiddeployqt
  }
@@ -102,6 +111,12 @@ index 861d06d..8b6288d 100644
  
  win32|winrt:SUBDIRS += windeployqt
  winrt:SUBDIRS += winrtrunner qtd3dservice
+@@ -36,4 +38,4 @@ qtNomakeTools( \
+     macdeployqt \
+ )
+ 
+-!android:!ios:!qnx:!wince*:!winrt*:SUBDIRS += qtdiag
++!linguistonly:!android:!ios:!qnx:!wince*:!winrt*:SUBDIRS += qtdiag
 diff --git a/tests/auto/auto.pro b/tests/auto/auto.pro
 index c3acfe3..b48e711 100644
 --- a/tests/auto/auto.pro
