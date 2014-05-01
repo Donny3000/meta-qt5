@@ -163,23 +163,30 @@ qmake5_base_do_configure () {
 
 qmake5_base_do_install() {
     # Fix install paths for all
-    find -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT)${STAGING_DIR_TARGET},(INSTALL_ROOT),g"
+    if [ "${BUILD_SYS}" = "${HOST_SYS}" ] ; then
+        find -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT),(INSTALL_ROOT)${STAGING_DIR_NATIVE},g"
+    else
+        find -name "Makefile*" | xargs sed -i "s,(INSTALL_ROOT)${STAGING_DIR_TARGET},(INSTALL_ROOT),g"
+    fi
 
     oe_runmake install INSTALL_ROOT=${D}
 
-    # everything except HostData and HostBinaries is prefixed with sysroot value,
-    # but we cannot remove sysroot override, because that's useful for pkg-config etc
-    # In some cases like QtQmlDevTools in qtdeclarative, the sed above does not work,
-    # fix them manually
-    if [ -d ${D}${STAGING_DIR_TARGET} ] && [ -n "${STAGING_DIR_TARGET}" ] ; then
-        echo "Some files are installed in wrong directory ${D}${STAGING_DIR_TARGET}"
-        cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
-        rm -rf ${D}${STAGING_DIR_TARGET}
-        # remove empty dirs
-        TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
-        while test ${TMP} != ${D}; do
-            rmdir ${TMP}
-            TMP=`dirname ${TMP}`;
-        done
+    # Only do this for target builds. Native install work a little differently
+    if [ "${BUILD_SYS}" != "${HOST_SYS}" ] ; then
+        # everything except HostData and HostBinaries is prefixed with sysroot value,
+        # but we cannot remove sysroot override, because that's useful for pkg-config etc
+        # In some cases like QtQmlDevTools in qtdeclarative, the sed above does not work,
+        # fix them manually
+        if [ -d ${D}${STAGING_DIR_TARGET} ] && [ -n "${STAGING_DIR_TARGET}" ] ; then
+            echo "Some files are installed in wrong directory ${D}${STAGING_DIR_TARGET}"
+            cp -ra ${D}${STAGING_DIR_TARGET}/* ${D}
+            rm -rf ${D}${STAGING_DIR_TARGET}
+            # remove empty dirs
+            TMP=`dirname ${D}/${STAGING_DIR_TARGET}`
+            while test ${TMP} != ${D}; do
+                rmdir ${TMP}
+                TMP=`dirname ${TMP}`;
+            done
+        fi
     fi
 }
